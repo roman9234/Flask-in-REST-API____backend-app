@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from eshop.businsess_logic.product import Product
+from eshop.model.product import Product
 
 _products: List[Product] = [
     Product(
@@ -20,7 +20,8 @@ _products: List[Product] = [
     )
 ]
 
-
+# Сохраняет недавно добавленный Product
+# Если id нового Product равен id уже существующего в списке _product, новый Product заменяет собой старый
 def save(product: Product):
     for i in range(len(_products)):
         existed_product = _products[i]
@@ -30,16 +31,17 @@ def save(product: Product):
     else:
         _products.append(product)
 
-
+# удаляет product с указанным ID
 def delete_by_id(id: str):
     global _products
     _products = [p for p in _products if p.id != id]
 
 
+# возвращает Product с указанным ID
 def get_by_id(id: str) -> Optional[Product]:
     return next((p for p in _products if p.id == id), None)
 
-
+# делит _product на промежутки равные limit и возвращает из них промежуток под номером page
 def get_many(page: int = 0, limit: int = 10):
     start = page * limit
     end = start + limit

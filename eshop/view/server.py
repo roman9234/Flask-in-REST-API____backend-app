@@ -6,10 +6,12 @@ from eshop.view.order_schemas import OrderCreateDtoSchema, OrderSchema, OrderGet
 
 app = Flask(__name__)
 
-
+# Создаёт Order из JSON данных по схеме
+# Выводит в ответе данные созданного order
 @app.post("/api/v1/order")
 def order_create_endpoint():
     try:
+        # load загружает данные из JSON в схему
         order_create_dto = OrderCreateDtoSchema().load(request.json)
     except ValidationError as err:
         return err.messages, 400
@@ -23,9 +25,10 @@ def order_create_endpoint():
             "error": str(e)
         }
 
+    # dump переводит схему в JSON формат
     return OrderSchema().dump(order)
 
-
+# Возвращает страницу page из списка Order поделённого  на отрезки limit
 @app.get("/api/v1/order")
 def order_get_many_endpoint():
     try:
@@ -41,7 +44,8 @@ def order_get_many_endpoint():
 
     return OrderSchema(many=True).dump(order)
 
-
+# Возвращает Order с указанным id если он есть
+# Иначе возвращает JSON с описанием ощибки
 @app.get("/api/v1/order/<id>")
 def order_get_by_id_endpoint(id):
     order = order_get_by_id(id)

@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from eshop.businsess_logic.product import Product
+from eshop.model.product import Product
 
 
 def product_create(dto) -> Product:
