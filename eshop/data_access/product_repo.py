@@ -5,17 +5,17 @@ from eshop.model.product import Product
 _products: List[Product] = [
     Product(
         id='1',
-        name='Телевизор',
+        name='Television Set',
         price=15,
     ),
     Product(
         id='2',
-        name='Кофемашина',
+        name='Coffee Machine',
         price=10,
     ),
     Product(
         id='3',
-        name='Ноутбук',
+        name='Laptop',
         price=12,
     )
 ]
@@ -46,3 +46,13 @@ def get_many(page: int = 0, limit: int = 10):
     start = page * limit
     end = start + limit
     return _products[start:end]
+
+def get_new_id():
+    i = 1
+    existing_ids = [x.id for x in _products]
+    while True:
+        if not str(i) in existing_ids:
+            return str(i)
+        else:
+            i+=1
+
